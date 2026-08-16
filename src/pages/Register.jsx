@@ -1,97 +1,259 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaEye, FaEyeSlash, FaUserPlus } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../api/api";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaGoogle,
+  FaCode,
+  FaGraduationCap,
+} from "react-icons/fa";
 
 function Register() {
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
+const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  skillsOffered: "",
+  skillsWanted: "",
+});
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  try {
+    await api.post("/users", {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      skillsOffered: formData.skillsOffered,
+      skillsWanted: formData.skillsWanted,
+    });
+
+    alert("Registration Successful!");
+
+    navigate("/login");
+  } catch (error) {
+    console.error(error);
+    alert("Registration Failed");
+  }
+};
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 flex items-center justify-center px-6">
+    <section className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 flex items-center justify-center px-6 py-20 overflow-hidden relative">
 
       {/* Background Glow */}
       <div className="absolute w-96 h-96 bg-cyan-500/20 blur-[120px] rounded-full top-10 left-10"></div>
-      <div className="absolute w-[450px] h-[450px] bg-purple-500/20 blur-[150px] rounded-full bottom-0 right-0"></div>
+      <div className="absolute w-96 h-96 bg-purple-500/20 blur-[120px] rounded-full bottom-10 right-10"></div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10 w-full max-w-xl bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-10 shadow-2xl"
-      >
-        <div className="text-center mb-8">
-          <FaUserPlus className="text-cyan-400 text-5xl mx-auto mb-4" />
+      <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
 
-          <h1 className="text-4xl font-bold text-white">
-            Create Account
+        {/* LEFT SIDE */}
+        <motion.div
+          initial={{ opacity: 0, x: -80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-6xl font-extrabold text-white leading-tight">
+            Join <span className="text-cyan-400">SkillSwap</span>
           </h1>
 
-          <p className="text-gray-300 mt-2">
-            Join SkillSwap and start learning today.
+          <p className="mt-6 text-xl text-gray-300 leading-8">
+            Learn new skills from people around the world and share your own
+            knowledge through an amazing community.
           </p>
-        </div>
 
-        <form className="space-y-5">
+          <div className="mt-12 space-y-6">
 
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
-          />
+            <div className="flex items-center gap-4">
+              <div className="bg-cyan-500 p-4 rounded-full">
+                <FaCode className="text-white text-xl" />
+              </div>
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
-          />
+              <div>
+                <h3 className="text-white font-semibold text-xl">
+                  Teach Your Skills
+                </h3>
 
-          <div className="relative">
+                <p className="text-gray-400">
+                  Help others while building your profile.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="bg-pink-500 p-4 rounded-full">
+                <FaGraduationCap className="text-white text-xl" />
+              </div>
+
+              <div>
+                <h3 className="text-white font-semibold text-xl">
+                  Learn Faster
+                </h3>
+
+                <p className="text-gray-400">
+                  Connect with mentors and passionate learners.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </motion.div>
+
+        {/* RIGHT SIDE */}
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-10 shadow-2xl"
+        >
+          <h2 className="text-4xl font-bold text-white mb-2">
+            Create Account
+          </h2>
+
+          <p className="text-gray-300 mb-8">
+            Start your SkillSwap journey today.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+
+            {/* Name */}
+            <div className="relative">
+              <FaUser className="absolute left-4 top-4 text-cyan-400" />
+
+              <input
+  type="text"
+  name="name"
+  value={formData.name}
+  onChange={handleChange}
+  placeholder="Full Name"
+  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
+            </div>
+
+            {/* Email */}
+            <div className="relative">
+              <FaEnvelope className="absolute left-4 top-4 text-cyan-400" />
+
+              <input
+  type="email"
+  name="email"
+  value={formData.email}
+  onChange={handleChange}
+  placeholder="Email Address"
+  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <FaLock className="absolute left-4 top-4 text-cyan-400" />
+
+              <input
+  type="password"
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+  placeholder="Password"
+  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="relative">
+              <FaLock className="absolute left-4 top-4 text-cyan-400" />
+
+              <input
+  type="password"
+  name="confirmPassword"
+  value={formData.confirmPassword}
+  onChange={handleChange}
+  placeholder="Confirm Password"
+  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
+            </div>
+
+            {/* Skills */}
             <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
-            />
+  type="text"
+  name="skillsOffered"
+  value={formData.skillsOffered}
+  onChange={handleChange}
+  placeholder="Skills You Can Teach (Java, React...)"
+  className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
 
+           <input
+  type="text"
+  name="skillsWanted"
+  value={formData.skillsWanted}
+  onChange={handleChange}
+  placeholder="Skills You Want to Learn"
+  className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+/>
+
+            {/* Level */}
+            <select className="w-full px-5 py-4 rounded-xl bg-slate-800 border border-white/10 text-white outline-none focus:border-cyan-400">
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+            </select>
+
+            {/* Register */}
+            <button
+              type="submit"
+              className="w-full py-4 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition font-semibold text-lg"
+            >
+              Create Account
+            </button>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 h-px bg-gray-600"></div>
+              <span className="text-gray-400">OR</span>
+              <div className="flex-1 h-px bg-gray-600"></div>
+            </div>
+
+            {/* Google */}
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"
+              className="w-full py-4 rounded-xl border border-white/20 text-white hover:bg-white/10 transition flex justify-center items-center gap-3"
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              <FaGoogle />
+              Continue with Google
             </button>
-          </div>
 
-          <input
-            type="text"
-            placeholder="Skills You Can Teach"
-            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
-          />
+            <p className="text-center text-gray-300">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-cyan-400 hover:underline"
+              >
+                Login
+              </Link>
+            </p>
 
-          <input
-            type="text"
-            placeholder="Skills You Want To Learn"
-            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
-          />
+          </form>
+        </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-4 rounded-xl font-semibold text-lg"
-          >
-            Create Account
-          </motion.button>
-
-        </form>
-
-        <p className="text-center text-gray-400 mt-6">
-          Already have an account?
-          <span className="text-cyan-400 cursor-pointer hover:underline ml-2">
-            Sign In
-          </span>
-        </p>
-
-      </motion.div>
-
-    </div>
+      </div>
+    </section>
   );
 }
 

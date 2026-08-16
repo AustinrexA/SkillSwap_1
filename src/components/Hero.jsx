@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import {
   FaUsers,
@@ -17,24 +18,24 @@ function Hero() {
 
       {/* Floating Skills */}
       <motion.div
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 5, repeat: Infinity }}
+        animate={{ y: [100, 20, 100] }}
+        transition={{ duration: 7, repeat: Infinity }}
         className="absolute top-32 left-20 bg-cyan-500/20 backdrop-blur-lg px-5 py-2 rounded-full border border-cyan-400/30"
       >
         Java
       </motion.div>
 
       <motion.div
-        animate={{ y: [0, 20, 0] }}
+        animate={{ y: [100, -10, 100] }}
         transition={{ duration: 6, repeat: Infinity }}
-        className="absolute top-60 right-28 bg-pink-500/20 backdrop-blur-lg px-5 py-2 rounded-full border border-pink-400/30"
+        className="absolute top-60 left-100 bg-pink-500/20 backdrop-blur-lg px-5 py-2 rounded-full border border-pink-400/30"
       >
         React
       </motion.div>
 
       <motion.div
-        animate={{ y: [0, -15, 0] }}
-        transition={{ duration: 4, repeat: Infinity }}
+        animate={{ y: [100, 50, 100] }}
+        transition={{ duration: 6, repeat: Infinity }}
         className="absolute bottom-28 left-36 bg-purple-500/20 backdrop-blur-lg px-5 py-2 rounded-full border border-purple-400/30"
       >
         Spring Boot
@@ -70,14 +71,16 @@ function Hero() {
 
           <div className="flex gap-5 mt-10">
 
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-cyan-500 hover:bg-cyan-600 px-8 py-4 rounded-full font-semibold flex items-center gap-3"
-            >
-              Get Started
-              <FaArrowRight />
-            </motion.button>
+            <Link to="/register">
+  <motion.button
+    whileHover={{ scale: 1.08 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-cyan-500 hover:bg-cyan-600 px-8 py-4 rounded-full font-semibold flex items-center gap-3"
+  >
+    Get Started
+    <FaArrowRight />
+  </motion.button>
+</Link>
 
             <motion.button
               whileHover={{ scale: 1.08 }}

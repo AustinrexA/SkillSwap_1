@@ -10,6 +10,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Requests from "./pages/Requests";
 import Notifications from "./pages/Notifications";
 import Chat from "./pages/Chat";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminSwaps from "./pages/AdminSwaps";
+import AdminMessages from "./pages/AdminMessages";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
@@ -52,8 +57,47 @@ function App() {
     </ProtectedRoute>
   }
 />
+<Route
+  path="/admin"
+  element={
+    <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/users"
+  element={
+    <AdminRoute>
+      <AdminUsers />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/swaps"
+  element={
+    <AdminRoute>
+      <AdminSwaps />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/messages"
+  element={
+    <AdminRoute>
+      <AdminMessages />
+    </AdminRoute>
+  }
+/>
+
+
+
 <Route path="/notifications" element={<Notifications />} />
     </Routes>
+    
   );
 }
 

@@ -87,6 +87,16 @@ function Navbar() {
               Profile
             </Link>
           </li>
+          {user?.admin && (
+  <li>
+    <Link
+      to="/admin"
+      className="hover:text-cyan-400 transition"
+    >
+      Admin
+    </Link>
+  </li>
+)}
         </ul>
 
         {/* User Section */}

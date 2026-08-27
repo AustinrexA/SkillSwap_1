@@ -15,6 +15,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminSwaps from "./pages/AdminSwaps";
 import AdminMessages from "./pages/AdminMessages";
 import AdminRoute from "./components/AdminRoute";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -92,8 +93,7 @@ function App() {
     </AdminRoute>
   }
 />
-
-
+<Route path="/forgot-password" element={<ForgotPassword />} />
 
 <Route path="/notifications" element={<Notifications />} />
     </Routes>

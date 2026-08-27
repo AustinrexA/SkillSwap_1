@@ -157,12 +157,12 @@ const handleSubmit = async (e) => {
                 Remember Me
               </label>
 
-              <button
-                type="button"
-                className="text-cyan-400 hover:underline"
-              >
-                Forgot Password?
-              </button>
+              <Link
+  to="/forgot-password"
+  className="text-cyan-400 hover:underline"
+>
+  Forgot Password?
+</Link>
             </div>
 
             {/* Login Button */}

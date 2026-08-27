@@ -1,0 +1,9 @@
+# Ignore sensitive keys and configurations
+.env
+
+# Ignore heavy external dependencies
+node_modules/
+
+# Ignore local database files
+*.db
+*.sqlite

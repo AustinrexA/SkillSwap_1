@@ -14,49 +14,46 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-const [loginData, setLoginData] = useState({
-  email: "",
-  password: "",
-});
-
-const handleChange = (e) => {
-  setLoginData({
-    ...loginData,
-    [e.target.name]: e.target.value,
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
   });
-};
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleChange = (e) => {
+    setLoginData({
+      ...loginData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  try {
-    const response = await api.post("/users/login", loginData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (response.data) {
-      // Save logged-in user
-      localStorage.setItem("user", JSON.stringify(response.data));
+    try {
+      const response = await api.post("/users/login", loginData);
 
-      alert("Login Successful!");
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
 
-      navigate("/dashboard");
-    } else {
-      alert("Invalid Email or Password");
+        alert("Login Successful!");
+
+        navigate("/dashboard");
+      } else {
+        alert("Invalid Email or Password");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Login Failed");
     }
-  } catch (error) {
-    console.error(error);
-    alert("Login Failed");
-  }
-};
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 flex items-center justify-center px-6 py-20 relative overflow-hidden">
-
       {/* Background Glow */}
       <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] top-10 left-10"></div>
       <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] bottom-10 right-10"></div>
 
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
-
         {/* Left Side */}
         <motion.div
           initial={{ opacity: 0, x: -80 }}
@@ -75,7 +72,6 @@ const handleSubmit = async (e) => {
           </p>
 
           <div className="mt-10 space-y-4">
-
             <div className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl border border-white/10">
               <h3 className="text-cyan-400 font-semibold text-lg">
                 🚀 Learn Faster
@@ -93,7 +89,6 @@ const handleSubmit = async (e) => {
                 Teach what you know and learn what you love.
               </p>
             </div>
-
           </div>
         </motion.div>
 
@@ -104,28 +99,25 @@ const handleSubmit = async (e) => {
           transition={{ duration: 0.8 }}
           className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-10 shadow-2xl"
         >
-          <h2 className="text-4xl font-bold text-white">
-            Login
-          </h2>
+          <h2 className="text-4xl font-bold text-white">Login</h2>
 
           <p className="text-gray-300 mt-2 mb-8">
             Sign in to your SkillSwap account.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
             {/* Email */}
             <div className="relative">
               <FaEnvelope className="absolute left-4 top-5 text-cyan-400" />
 
               <input
-  type="email"
-  name="email"
-  value={loginData.email}
-  onChange={handleChange}
-  placeholder="Email Address"
-  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
-/>
+                type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleChange}
+                placeholder="Email Address"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+              />
             </div>
 
             {/* Password */}
@@ -133,13 +125,13 @@ const handleSubmit = async (e) => {
               <FaLock className="absolute left-4 top-5 text-cyan-400" />
 
               <input
-  type={showPassword ? "text" : "password"}
-  name="password"
-  value={loginData.password}
-  onChange={handleChange}
-  placeholder="Password"
-  className="w-full pl-12 pr-12 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
-/>
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={loginData.password}
+                onChange={handleChange}
+                placeholder="Password"
+                className="w-full pl-12 pr-12 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-cyan-400"
+              />
 
               <button
                 type="button"
@@ -157,13 +149,13 @@ const handleSubmit = async (e) => {
                 Remember Me
               </label>
 
-             <button
-  type="button"
-  onClick={() => navigate("/forgot-password")}
-  className="text-cyan-400 hover:underline"
->
-  Forgot Password?
-</button>
+              <button
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+                className="text-cyan-400 hover:underline"
+              >
+                Forgot Password?
+              </button>
             </div>
 
             {/* Login Button */}
@@ -199,10 +191,8 @@ const handleSubmit = async (e) => {
                 Register
               </Link>
             </p>
-
           </form>
         </motion.div>
-
       </div>
     </section>
   );

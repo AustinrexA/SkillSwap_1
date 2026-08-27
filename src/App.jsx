@@ -93,7 +93,7 @@ function App() {
     </AdminRoute>
   }
 />
-<Route path="/Forgot-password" element={<ForgotPassword />} />
+<Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/notifications" element={<Notifications />} />
     </Routes>
     
